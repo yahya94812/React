@@ -1,8 +1,11 @@
-import UpdaterFunction from "./UpdaterFunction"
+import UpdaterFunction from "./UpdaterFunction";
+import ObjectStateUpdater from "./ObjectStateUpdater";
 function App() {
 return(
   <>
-  <UpdaterFunction />
+  {/* <UpdaterFunction /> */}
+  <ObjectStateUpdater />
+
   </>
 )
 }
