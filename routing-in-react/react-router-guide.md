@@ -1,19 +1,3 @@
-# React router implementation guide
-
-**Created:** 1/15/2026 8:56:30  
-**Updated:** 1/15/2026 10:24:42  
-**Exported:** 1/15/2026 10:26:27  
-**Link:** [https://claude.ai/chat/33aa843a-9b18-4fff-95db-0142e3488bb6](https://claude.ai/chat/33aa843a-9b18-4fff-95db-0142e3488bb6)  
-
-## Prompt:
-1/15/2026, 8:56:33 AM
-
-Explain react router with example use case
-
-
-
-## Response:
-1/15/2026, 8:56:49 AM
 
 # React Router Overview
 

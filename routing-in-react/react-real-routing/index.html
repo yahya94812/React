@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-client-side-routing</title>
+  </head>
+  <body>
+    <!-- GitHub Pages SPA redirect handler -->
+    <script>
+      (function() {
+        const redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+      
+      // Handle the ?/ redirect from 404.html
+      (function() {
+        const l = window.location;
+        if (l.search.startsWith('?/')) {
+          const decoded = l.search.slice(2).split('&');
+          const path = decoded[0] || '';
+          const query = decoded.slice(1).join('&');
+          const newUrl = l.pathname.slice(0, -1) + '/' + path + (query ? '?' + query : '') + l.hash;
+          history.replaceState(null, null, newUrl);
+        }
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
