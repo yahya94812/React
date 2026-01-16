@@ -2,81 +2,108 @@
 
 A comprehensive guide covering React fundamentals through practical examples, progressing from basic components to advanced hooks and Context API.
 
-## Table of Contents
-1. [Project Setup](#project-setup)
-2. [Section 1: Basic Components & Styling](#section-1-basic-components--styling)
-3. [Section 2: Props & Conditional Rendering](#section-2-props--conditional-rendering)
-4. [Section 3: Lists & Rendering Collections](#section-3-lists--rendering-collections)
-5. [Section 4: Event Handling](#section-4-event-handling)
-6. [Section 5: State Management with useState](#section-5-state-management-with-usestate)
-7. [Section 6: Advanced State Updates](#section-6-advanced-state-updates)
-8. [Section 7: Todo List Project](#section-7-todo-list-project)
-9. [Section 8: useEffect & Side Effects](#section-8-useeffect--side-effects)
-10. [Section 9: useRef Hook](#section-9-useref-hook)
-11. [Best Practices & Patterns](#best-practices--patterns)
-
 ---
 
-## Project Setup
+## 1. Introduction & Project Setup
 
-### Prerequisites
+### 1.1 Prerequisites
+
+Before starting this tutorial, ensure you have the following installed:
+
 ```bash
-Node.js and npm installed
+Node.js (v16 or higher recommended)
+npm (comes with Node.js)
 ```
 
-### Installation
+### 1.2 Installation
+
+Clone or navigate to the project directory and install dependencies:
+
 ```bash
 npm install
 npm run dev
 ```
 
-### Project Structure
+### 1.3 Project Structure
+
 ```
 react-video-tutorial/
-├── src/          # Current working directory
-├── src1/         # Basic components
-├── src2/         # Props and conditionals
-├── src3/         # Lists
-├── src4/         # Events
-├── src5/         # State basics
-├── src6/         # Advanced state
-├── src7/         # Todo app
-├── src8/         # useEffect & Context
-└── public/       # Static assets
+├── src/              # Current working directory
+├── src1/ - src8/     # Tutorial sections
+└── public/           # Static assets
 ```
-
-### Key Configuration Files
-
-**vite.config.js**
-- Fast development server
-- Hot Module Replacement (HMR)
-- React plugin configuration
-
-**eslint.config.js**
-- Code quality enforcement
-- React-specific rules
-- Best practices validation
 
 ---
 
-## Section 1: Basic Components & Styling
+## 2. React Fundamentals
 
-### Learning Objectives
-- Create functional components
-- Understand JSX syntax
-- Apply CSS styling (regular & modules)
-- Component composition
+### 2.1 What is React?
 
-### 1.1 Header Component
+React is a JavaScript library for building UIs using a **component-based architecture**.
 
-**Purpose:** Reusable page header
+### 2.2 JSX (JavaScript XML)
 
-**Key Concepts:**
-- Functional component structure
-- JSX elements
-- Basic styling
+JSX lets you write HTML-like code in JavaScript.
 
-**Example Structure:**
+#### JSX Rules
+
+| Rule | Example |
+|------|---------|
+| Single Root Element | Use `<div>` or `<>` (Fragment) |
+| JavaScript in `{}` | `<h1>Hello, {name}!</h1>` |
+| camelCase Attributes | `className`, `onClick` |
+| Self-Closing Tags | `<img />`, `<input />` |
+
+```jsx
+// ✅ Correct - Single root with Fragment
+function Example() {
+  const name = "React";
+  return (
+    <>
+      <h1>Hello, {name}!</h1>
+      <p className="description">Welcome to React</p>
+      <img src="photo.jpg" alt="Photo" />
+    </>
+  );
+}
+```
+
+### 2.3 Functional Components
+
+Modern React uses functional components—JavaScript functions that return JSX:
+
+```jsx
+// Standard function
+function Greeting() {
+  return <h1>Hello, World!</h1>;
+}
+
+// Arrow function
+const Greeting = () => <h1>Hello, World!</h1>;
+```
+
+### 2.4 Component Composition
+
+Components can be nested inside other components to build complex UIs:
+
+```jsx
+function App() {
+  return (
+    <div>
+      <Header />
+      <MainContent />
+      <Footer />
+    </div>
+  );
+}
+```
+
+---
+
+## 3. Basic Components & Styling
+
+### 3.1 Header Component
+
 ```jsx
 function Header() {
   return (
@@ -92,23 +119,12 @@ function Header() {
     </header>
   );
 }
+
+export default Header;
 ```
 
-**CSS Styling:**
-- Flexbox for layout
-- Navigation styling
-- Hover effects
+### 3.2 Footer Component
 
-### 1.2 Footer Component
-
-**Purpose:** Reusable page footer
-
-**Key Concepts:**
-- Semantic HTML in JSX
-- Copyright notices
-- Footer styling
-
-**Pattern:**
 ```jsx
 function Footer() {
   return (
@@ -117,49 +133,32 @@ function Footer() {
     </footer>
   );
 }
+
+export default Footer;
 ```
 
-### 1.3 Card Component
+> **Key Concept:** `{new Date().getFullYear()}` dynamically displays the current year.
 
-**Purpose:** Reusable content container
+### 3.3 Card Component
 
-**Structure:**
-- Profile image
-- Title/name
-- Description
-- Styled container
+```jsx
+function Card({ image, title, description }) {
+  return (
+    <div className="card">
+      <img src={image} alt={title} className="card-image" />
+      <h2 className="card-title">{title}</h2>
+      <p className="card-description">{description}</p>
+    </div>
+  );
+}
 
-**Key Concepts:**
-- Component composition
-- Image handling in React
-- CSS for card layouts
-
-### 1.4 Food Component
-
-**Purpose:** Simple data display component
-
-**Demonstrates:**
-- Basic component structure
-- Rendering text and data
-- Simple JSX expressions
-
-### 1.5 Button Component with CSS Modules
-
-**Purpose:** Styled button with scoped CSS
-
-**File Structure:**
-```
-Button/
-├── Button.jsx
-└── Button.module.css
+export default Card;
 ```
 
-**CSS Modules Benefits:**
-1. **Scoped Styling:** Classes are locally scoped
-2. **No Conflicts:** Automatic unique class names
-3. **Maintainability:** Component-specific styles
+### 3.4 CSS Modules
 
-**Implementation Pattern:**
+CSS Modules provide **scoped styling** preventing class name conflicts.
+
 ```jsx
 import styles from './Button.module.css';
 
@@ -168,128 +167,111 @@ function Button() {
 }
 ```
 
-**CSS Module Usage:**
-- Import styles as object
-- Access classes via `styles.className`
-- Automatic class name hashing
+Class names are automatically hashed (e.g., `Button_button_x7h2k`).
 
 ---
 
-## Section 2: Props & Conditional Rendering
+## 4. Props & Conditional Rendering
 
-### Learning Objectives
-- Pass data between components
-- Validate props with PropTypes
-- Implement conditional rendering
-- Handle default values
+### 4.1 Understanding Props
 
-### 2.1 Student Component
+Props (properties) are the mechanism for passing data from parent to child components. They are:
+- **Read-only** - Cannot be modified by the child
+- **Unidirectional** - Flow from parent to child only
 
-**Purpose:** Display student information using props
+### 4.2 Student Component
 
-**Props Received:**
-- `name` (string): Student's name
-- `age` (number): Student's age
-- `isStudent` (boolean): Enrollment status
+A component demonstrating prop usage and validation:
 
-**Implementation Pattern:**
 ```jsx
-function Student(props) {
+import PropTypes from 'prop-types';
+
+function Student({ name, age, isStudent }) {
   return (
     <div className="student">
-      <p>Name: {props.name}</p>
-      <p>Age: {props.age}</p>
-      <p>Student: {props.isStudent ? "Yes" : "No"}</p>
+      <p>Name: {name}</p>
+      <p>Age: {age}</p>
+      <p>Student: {isStudent ? "Yes" : "No"}</p>
     </div>
   );
 }
-```
 
-**PropTypes Validation:**
-```jsx
+// Prop validation
 Student.propTypes = {
   name: PropTypes.string,
   age: PropTypes.number,
   isStudent: PropTypes.bool,
 };
-```
 
-**Default Props:**
-```jsx
+// Default values
 Student.defaultProps = {
   name: "Guest",
   age: 0,
   isStudent: false,
 };
+
+export default Student;
 ```
 
-**Benefits:**
-- Type safety during development
-- Clear component API
-- Prevents runtime errors
-- Self-documenting code
+### 4.3 Conditional Rendering Techniques
 
-### 2.2 UserGreeting Component
+#### 1. Ternary Operator
+Best for simple two-option scenarios:
 
-**Purpose:** Conditional rendering based on login status
-
-**Props:**
-- `isLoggedIn` (boolean): User authentication status
-- `username` (string): User's name
-
-**Conditional Rendering Techniques:**
-
-**1. Ternary Operator:**
 ```jsx
-return isLoggedIn ? 
-  <h2>Welcome {username}</h2> : 
-  <h2>Please log in</h2>;
-```
-
-**2. Logical AND (&&):**
-```jsx
-return (
-  <>
-    {isLoggedIn && <h2>Welcome {username}</h2>}
-    {!isLoggedIn && <h2>Please log in</h2>}
-  </>
-);
-```
-
-**3. Early Return:**
-```jsx
-if (isLoggedIn) {
-  return <h2>Welcome {username}</h2>;
+function UserGreeting({ isLoggedIn, username }) {
+  return isLoggedIn ? 
+    <h2>Welcome, {username}!</h2> : 
+    <h2>Please log in</h2>;
 }
-return <h2>Please log in</h2>;
 ```
 
-**When to Use Each:**
-- **Ternary:** Simple two-option rendering
-- **Logical AND:** Optional rendering
-- **Early Return:** Complex conditions or multiple returns
+#### 2. Logical AND (&&)
+Best for optional/conditional rendering:
+
+```jsx
+function Notification({ hasMessages, count }) {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      {hasMessages && <p>You have {count} new messages</p>}
+    </div>
+  );
+}
+```
+
+#### 3. Early Return
+Best for complex conditions or guard clauses:
+
+```jsx
+function UserGreeting({ isLoggedIn, username }) {
+  if (!isLoggedIn) {
+    return <h2>Please log in</h2>;
+  }
+  return <h2>Welcome, {username}!</h2>;
+}
+```
+
+#### When to Use Each Pattern
+
+| Pattern | Use Case |
+|---------|----------|
+| Ternary (`? :`) | Two mutually exclusive options |
+| Logical AND (`&&`) | Show/hide a single element |
+| Early Return | Multiple conditions, guard clauses |
 
 ---
 
-## Section 3: Lists & Rendering Collections
+## 5. Lists & Rendering Collections
 
-### Learning Objectives
-- Render arrays of data
-- Understand the importance of keys
-- Filter and transform lists
-- Handle empty states
+### 5.1 Basic List Rendering
 
-### 3.1 List Component
+Use the `map()` method to transform arrays into JSX elements:
 
-**Purpose:** Display collections of data efficiently
-
-**Key Concepts:**
-
-**1. Basic List Rendering:**
 ```jsx
-const fruits = ['Apple', 'Banana', 'Orange'];
-
-function List() {
+function FruitList() {
+  const fruits = ['Apple', 'Banana', 'Orange'];
+  
   return (
     <ul>
       {fruits.map((fruit, index) => 
@@ -300,15 +282,16 @@ function List() {
 }
 ```
 
-**2. Objects in Lists:**
-```jsx
-const fruits = [
-  { id: 1, name: 'Apple', calories: 95 },
-  { id: 2, name: 'Banana', calories: 105 },
-  { id: 3, name: 'Orange', calories: 45 },
-];
+### 5.2 Rendering Objects in Lists
 
-function List() {
+```jsx
+function FruitList() {
+  const fruits = [
+    { id: 1, name: 'Apple', calories: 95 },
+    { id: 2, name: 'Banana', calories: 105 },
+    { id: 3, name: 'Orange', calories: 45 },
+  ];
+
   return (
     <ul>
       {fruits.map(fruit => 
@@ -321,62 +304,55 @@ function List() {
 }
 ```
 
-**3. Filtering Lists:**
-```jsx
-const lowCalFruits = fruits.filter(f => f.calories < 100);
-```
+### 5.3 Filtering and Sorting
 
-**4. Sorting Lists:**
 ```jsx
+// Filtering
+const lowCalFruits = fruits.filter(fruit => fruit.calories < 100);
+
+// Sorting (always create a copy first)
 const sortedFruits = [...fruits].sort((a, b) => 
   a.name.localeCompare(b.name)
 );
 ```
 
-**The Key Prop:**
+### 5.4 The Key Prop
 
-**Why Keys Matter:**
-- Help React identify which items changed
-- Improve performance
-- Maintain component state correctly
+Keys help React identify which items have changed.
 
-**Good Keys:**
+| ✅ Good Keys | ❌ Bad Keys |
+|--------------|-------------|
+| `key={item.id}` | `key={index}` - Unstable with reordering |
+| `key={item.email}` | `key={Math.random()}` |
+
+### 5.5 Handling Empty States
+
+Always provide feedback when lists are empty:
+
 ```jsx
-<li key={item.id}>        // ✅ Unique ID
-<li key={item.email}>     // ✅ Unique field
-```
-
-**Bad Keys:**
-```jsx
-<li key={index}>          // ❌ Array index (can cause issues)
-<li key={Math.random()}>  // ❌ Random values (breaks reconciliation)
-```
-
-**Empty State Handling:**
-```jsx
-{items.length === 0 ? 
-  <p>No items to display</p> : 
-  <ul>{items.map(item => ...)}</ul>
+function ItemList({ items }) {
+  if (items.length === 0) {
+    return <p>No items to display</p>;
+  }
+  
+  return (
+    <ul>
+      {items.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
 }
 ```
 
 ---
 
-## Section 4: Event Handling
+## 6. Event Handling
 
-### Learning Objectives
-- Handle user interactions
-- Work with event objects
-- Understand event types
-- Prevent default behaviors
+### 6.1 Basic Event Handling
 
-### 4.1 Button Component
+React events use camelCase naming:
 
-**Purpose:** Demonstrate various click events
-
-**Event Types:**
-
-**1. Basic Click:**
 ```jsx
 function Button() {
   const handleClick = () => {
@@ -387,153 +363,129 @@ function Button() {
 }
 ```
 
-**2. Event Object:**
+### 6.2 The Event Object
+
+React wraps native events in a SyntheticEvent for cross-browser compatibility:
+
 ```jsx
 const handleClick = (e) => {
-  console.log(e);              // SyntheticEvent
-  console.log(e.target);       // Button element
-  console.log(e.type);         // "click"
+  console.log(e);              // SyntheticEvent object
+  console.log(e.target);       // DOM element that triggered event
+  console.log(e.type);         // Event type: "click"
+  e.preventDefault();          // Prevent default behavior
+  e.stopPropagation();         // Stop event bubbling
 };
 ```
 
-**3. Passing Arguments:**
+### 6.3 Passing Arguments to Handlers
+
+Use an arrow function wrapper:
+
 ```jsx
 const handleClick = (name) => {
-  console.log(`${name} clicked`);
+  console.log(`${name} was clicked`);
 };
 
-<button onClick={() => handleClick("Button1")}>Click</button>
+// In JSX
+<button onClick={() => handleClick("Submit")}>Submit</button>
+<button onClick={() => handleClick("Cancel")}>Cancel</button>
 ```
 
-**4. Double Click:**
+### 6.4 Mouse Events
+
 ```jsx
-const handleDoubleClick = (e) => {
-  e.target.textContent = "Double Clicked!";
-};
+function InteractiveImage() {
+  const handleMouseEnter = (e) => {
+    e.target.style.transform = "scale(1.1)";
+  };
 
-<button onDoubleClick={handleDoubleClick}>Double Click</button>
+  const handleMouseLeave = (e) => {
+    e.target.style.transform = "scale(1)";
+  };
+
+  return (
+    <img 
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={(e) => e.target.style.display = "none"}
+      onDoubleClick={(e) => e.target.style.border = "2px solid red"}
+      src="image.jpg"
+      alt="Interactive"
+    />
+  );
+}
 ```
 
-### 4.2 Pic Component
+### 6.5 Common Events
 
-**Purpose:** Image interaction events
+| Event | Trigger |
+|-------|---------|
+| `onClick`, `onDoubleClick` | Click events |
+| `onMouseEnter`, `onMouseLeave` | Hover events |
+| `onChange`, `onSubmit` | Form events |
+| `onKeyDown`, `onKeyUp` | Keyboard events |
+| `onFocus`, `onBlur` | Focus events |
 
-**Mouse Events:**
+### 6.6 Best Practices
 
-**1. Click Events:**
 ```jsx
-const handleClick = (e) => {
-  e.target.style.display = "none";
-};
+// ❌ Avoid - Creates new function each render
+<button onClick={() => doSomething(item)}>Click</button>
 
-<img onClick={handleClick} src="image.jpg" alt="Image" />
+// ✅ Better - Define handler separately
+const handleClick = () => doSomething(item);
+<button onClick={handleClick}>Click</button>
 ```
-
-**2. Hover Events:**
-```jsx
-const handleMouseEnter = (e) => {
-  e.target.style.transform = "scale(1.1)";
-};
-
-const handleMouseLeave = (e) => {
-  e.target.style.transform = "scale(1)";
-};
-
-<img 
-  onMouseEnter={handleMouseEnter}
-  onMouseLeave={handleMouseLeave}
-  src="image.jpg"
-/>
-```
-
-**Common Event Types:**
-- `onClick` - Mouse click
-- `onDoubleClick` - Double click
-- `onMouseEnter` - Mouse enters element
-- `onMouseLeave` - Mouse leaves element
-- `onChange` - Input value changes
-- `onSubmit` - Form submission
-- `onKeyDown` - Key pressed
-- `onFocus` - Element receives focus
-- `onBlur` - Element loses focus
-
-**Event Handler Best Practices:**
-1. Name handlers with "handle" prefix
-2. Use arrow functions for inline handlers
-3. Avoid inline arrow functions in JSX (re-renders)
-4. Pass minimal data to handlers
 
 ---
 
-## Section 5: State Management with useState
+## 7. State Management with useState
 
-### Learning Objectives
-- Understand React state
-- Use the useState hook
-- Handle form inputs
-- Create interactive components
+### 7.1 What is State?
 
-### 5.1 Counter Component
+State is data that changes over time. When state updates, React re-renders the component.
 
-**Purpose:** Simple state management example
+### 7.2 The useState Hook
 
-**Implementation:**
+```jsx
+const [value, setValue] = useState(initialValue);
+```
+
+#### Counter Example
+
 ```jsx
 import { useState } from 'react';
 
 function Counter() {
   const [count, setCount] = useState(0);
 
-  const increment = () => setCount(count + 1);
-  const decrement = () => setCount(count - 1);
-  const reset = () => setCount(0);
-
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
-      <button onClick={reset}>Reset</button>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <button onClick={() => setCount(0)}>Reset</button>
     </div>
   );
 }
 ```
 
-**Key Concepts:**
-- `useState` returns `[state, setState]`
-- State updates trigger re-renders
-- State is component-specific
-- Don't mutate state directly
+### 7.3 State with Different Data Types
 
-### 5.2 MyComponent
-
-**Purpose:** Basic state with string values
-
-**Example:**
 ```jsx
-function MyComponent() {
-  const [name, setName] = useState("Guest");
-
-  const updateName = () => {
-    setName("John Doe");
-  };
-
-  return (
-    <div>
-      <p>Name: {name}</p>
-      <button onClick={updateName}>Change Name</button>
-    </div>
-  );
-}
+const [name, setName] = useState("Guest");        // String
+const [age, setAge] = useState(0);                // Number
+const [isActive, setIsActive] = useState(false);  // Boolean
+const [user, setUser] = useState({});             // Object
+const [items, setItems] = useState([]);           // Array
 ```
 
-### 5.3 OnChange Component
+### 7.4 Controlled Form Inputs
 
-**Purpose:** Controlled form inputs
+In controlled components, React state is the "single source of truth":
 
-**Implementation:**
 ```jsx
-function OnChange() {
+function FormExample() {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [comment, setComment] = useState("");
@@ -541,7 +493,7 @@ function OnChange() {
   const [shipping, setShipping] = useState("Delivery");
 
   return (
-    <div>
+    <form>
       {/* Text Input */}
       <input 
         type="text"
@@ -593,29 +545,24 @@ function OnChange() {
         />
         Delivery
       </label>
-    </div>
+    </form>
   );
 }
 ```
 
-**Controlled Components:**
-- React state is "single source of truth"
-- Input value is controlled by state
-- Changes update state via onChange
-- State updates re-render component
+#### How Controlled Components Work
 
-### 5.4 ColorPicker Component
+```
+User types → onChange fires → State updates → Re-render → Input shows new value
+```
 
-**Purpose:** Interactive color selection
+### 7.5 ColorPicker Example
 
-**Implementation:**
+An interactive example combining state with inline styles:
+
 ```jsx
 function ColorPicker() {
   const [color, setColor] = useState("#FFFFFF");
-
-  const handleColorChange = (e) => {
-    setColor(e.target.value);
-  };
 
   return (
     <div>
@@ -624,214 +571,135 @@ function ColorPicker() {
         style={{
           backgroundColor: color,
           width: "200px",
-          height: "200px"
+          height: "200px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
         }}
       >
-        <p>Selected Color: {color}</p>
+        <p>Selected: {color}</p>
       </div>
-      <label>Select a Color:</label>
+      <label>Select a Color: </label>
       <input 
         type="color"
         value={color}
-        onChange={handleColorChange}
+        onChange={(e) => setColor(e.target.value)}
       />
     </div>
   );
 }
 ```
 
-**Features:**
-- Live color preview
-- Hex color display
-- Inline styles with state
-- Color input type
-
 ---
 
-## Section 6: Advanced State Updates
+## 8. Advanced State Updates
 
-### Learning Objectives
-- Update state based on previous state
-- Manage object state immutably
-- Handle array state correctly
-- Work with complex state structures
+### 8.1 The Updater Function Pattern
 
-### 6.1 UpdaterFunction Component
+When new state depends on previous state, use an updater function:
 
-**Purpose:** Demonstrate proper state updates
+#### The Problem - Stale State
 
-**Problem - Incorrect:**
 ```jsx
 const increment = () => {
-  setCount(count + 1);  // ❌ Uses stale state
-  setCount(count + 1);  // ❌ Both use same count value
-  setCount(count + 1);  // Result: count + 1, not count + 3
+  setCount(count + 1);  // Uses stale closure value
+  setCount(count + 1);  // Same stale value
+  setCount(count + 1);  // Result: count + 1, NOT count + 3
 };
 ```
 
-**Solution - Updater Function:**
+#### The Solution - Updater Function
+
 ```jsx
 const increment = () => {
-  setCount(prevCount => prevCount + 1);  // ✅ Uses latest state
-  setCount(prevCount => prevCount + 1);  // ✅ Chains correctly
-  setCount(prevCount => prevCount + 1);  // Result: count + 3
+  setCount(prev => prev + 1);  // Uses latest state
+  setCount(prev => prev + 1);  // Chains correctly
+  setCount(prev => prev + 1);  // Result: count + 3
 };
 ```
 
-**When to Use Updater Functions:**
-- Multiple state updates in succession
-- State depends on previous value
-- Asynchronous updates
-- Ensuring correct state transitions
+#### When to Use Updater Functions
 
-**Example:**
+| Scenario | Use Updater? |
+|----------|--------------|
+| Multiple updates in succession | ✅ Yes |
+| State depends on previous value | ✅ Yes |
+| Updates inside callbacks/async | ✅ Yes |
+| Setting independent value | ❌ No (direct OK) |
+
 ```jsx
-function UpdaterFunction() {
-  const [count, setCount] = useState(0);
+// ✅ Updater for dependent updates
+setCount(prev => prev + 1);
 
-  const increment = () => {
-    setCount(c => c + 1);
-  };
-
-  const decrement = () => {
-    setCount(c => c - 1);
-  };
-
-  const reset = () => {
-    setCount(0);  // Direct value OK when not dependent
-  };
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
-      <button onClick={reset}>Reset</button>
-    </div>
-  );
-}
+// ✅ Direct value for independent updates
+setName("John");
+setCount(0);  // Reset to specific value
 ```
 
-### 6.2 ObjectStateUpdater Component
+### 8.2 Managing Object State
 
-**Purpose:** Manage object state immutably
+Objects must be updated **immutably**—never modify directly.
 
-**Immutable Updates:**
 ```jsx
-function ObjectStateUpdater() {
+function CarForm() {
   const [car, setCar] = useState({
     year: 2024,
     make: "Ford",
     model: "Mustang"
   });
 
-  // ❌ Wrong - Mutates state directly
-  const updateYear = () => {
-    car.year = 2025;  // Never do this!
+  // ❌ WRONG - Direct mutation
+  const wrongUpdate = () => {
+    car.year = 2025;
+    setCar(car);
   };
 
-  // ✅ Correct - Creates new object
-  const updateYear = () => {
-    setCar(prevCar => ({
-      ...prevCar,
-      year: 2025
-    }));
-  };
-
-  const updateMake = (e) => {
-    setCar(c => ({ ...c, make: e.target.value }));
-  };
-
-  const updateModel = (e) => {
-    setCar(c => ({ ...c, model: e.target.value }));
+  // ✅ CORRECT - Spread operator creates new object
+  const handleChange = (field, value) => {
+    setCar(prev => ({ ...prev, [field]: value }));
   };
 
   return (
     <div>
-      <p>Your car: {car.year} {car.make} {car.model}</p>
-      
+      <p>{car.year} {car.make} {car.model}</p>
       <input 
         type="number"
         value={car.year}
-        onChange={(e) => setCar(c => ({ 
-          ...c, 
-          year: Number(e.target.value) 
-        }))}
-      />
-      
-      <input 
-        type="text"
-        value={car.make}
-        onChange={updateMake}
-      />
-      
-      <input 
-        type="text"
-        value={car.model}
-        onChange={updateModel}
+        onChange={(e) => handleChange('year', Number(e.target.value))}
       />
     </div>
   );
 }
 ```
 
-**Spread Operator (`...`):**
-- Creates shallow copy of object
-- Preserves existing properties
-- Overrides specified properties
-- Essential for immutability
+### 8.3 Managing Array State
 
-### 6.3 ArrayStateUpdater Component
+#### Array Operations Reference
 
-**Purpose:** Manage array state correctly
+| Operation | ❌ Mutating | ✅ Immutable |
+|-----------|-------------|--------------|
+| Add | `arr.push(item)` | `[...arr, item]` |
+| Remove | `arr.splice(i, 1)` | `arr.filter((_, i) => i !== idx)` |
+| Update | `arr[i] = newVal` | `arr.map((x, i) => i === idx ? newVal : x)` |
 
-**Array Operations:**
-
-**1. Add Item:**
 ```jsx
-const [foods, setFoods] = useState(["Apple", "Banana"]);
-
-const addFood = () => {
-  const newFood = document.getElementById("foodInput").value;
-  setFoods(f => [...f, newFood]);  // Add to end
-};
-```
-
-**2. Remove Item:**
-```jsx
-const removeFood = (index) => {
-  setFoods(foods.filter((_, i) => i !== index));
-};
-```
-
-**3. Update Item:**
-```jsx
-const updateFood = (index, newValue) => {
-  setFoods(foods.map((food, i) => 
-    i === index ? newValue : food
-  ));
-};
-```
-
-**Complete Example:**
-```jsx
-function ArrayStateUpdater() {
+function FoodList() {
   const [foods, setFoods] = useState(["Apple", "Banana", "Orange"]);
+  const [newFood, setNewFood] = useState("");
 
   const addFood = () => {
-    const newFood = document.getElementById("foodInput").value;
-    document.getElementById("foodInput").value = "";
-
-    setFoods(f => [...f, newFood]);
+    if (newFood.trim()) {
+      setFoods(prev => [...prev, newFood]);
+      setNewFood("");
+    }
   };
 
   const removeFood = (index) => {
-    setFoods(foods.filter((_, i) => i !== index));
+    setFoods(prev => prev.filter((_, i) => i !== index));
   };
 
   return (
     <div>
-      <h2>List of Foods</h2>
       <ul>
         {foods.map((food, index) => (
           <li key={index}>
@@ -840,41 +708,40 @@ function ArrayStateUpdater() {
           </li>
         ))}
       </ul>
-      <input type="text" id="foodInput" placeholder="Enter food" />
+      <input 
+        type="text" 
+        value={newFood}
+        onChange={(e) => setNewFood(e.target.value)}
+        placeholder="Enter food" 
+      />
       <button onClick={addFood}>Add Food</button>
     </div>
   );
 }
 ```
 
-**Array Methods for State:**
-- `[...array, item]` - Add to end
-- `[item, ...array]` - Add to beginning
-- `array.filter()` - Remove items
-- `array.map()` - Update items
-- `array.slice()` - Get portion
-- Never use `push()`, `pop()`, `splice()` directly
+### 8.4 Managing Arrays of Objects
 
-### 6.4 ListOfObjects Component
+Combining object and array patterns for complex state:
 
-**Purpose:** Manage complex array state
-
-**Implementation:**
 ```jsx
-function ListOfObjects() {
+function CarList() {
   const [cars, setCars] = useState([]);
   const [carYear, setCarYear] = useState(new Date().getFullYear());
   const [carMake, setCarMake] = useState("");
   const [carModel, setCarModel] = useState("");
 
   const addCar = () => {
+    if (!carMake || !carModel) return;
+    
     const newCar = {
+      id: Date.now(),  // Simple unique ID
       year: carYear,
       make: carMake,
       model: carModel
     };
 
-    setCars(c => [...c, newCar]);
+    setCars(prev => [...prev, newCar]);
 
     // Reset form
     setCarYear(new Date().getFullYear());
@@ -882,168 +749,112 @@ function ListOfObjects() {
     setCarModel("");
   };
 
-  const removeCar = (index) => {
-    setCars(c => c.filter((_, i) => i !== index));
+  const removeCar = (id) => {
+    setCars(prev => prev.filter(car => car.id !== id));
   };
 
   return (
     <div>
-      <h2>List of Cars</h2>
+      <h2>Car List</h2>
       <ul>
-        {cars.map((car, index) => (
-          <li key={index}>
+        {cars.map(car => (
+          <li key={car.id}>
             {car.year} {car.make} {car.model}
-            <button onClick={() => removeCar(index)}>Remove</button>
+            <button onClick={() => removeCar(car.id)}>Remove</button>
           </li>
         ))}
       </ul>
 
-      <input 
-        type="number"
-        value={carYear}
-        onChange={(e) => setCarYear(Number(e.target.value))}
-        placeholder="Year"
-      />
-      <input 
-        type="text"
-        value={carMake}
-        onChange={(e) => setCarMake(e.target.value)}
-        placeholder="Make"
-      />
-      <input 
-        type="text"
-        value={carModel}
-        onChange={(e) => setCarModel(e.target.value)}
-        placeholder="Model"
-      />
-      <button onClick={addCar}>Add Car</button>
+      <div className="form">
+        <input 
+          type="number"
+          value={carYear}
+          onChange={(e) => setCarYear(Number(e.target.value))}
+          placeholder="Year"
+        />
+        <input 
+          type="text"
+          value={carMake}
+          onChange={(e) => setCarMake(e.target.value)}
+          placeholder="Make"
+        />
+        <input 
+          type="text"
+          value={carModel}
+          onChange={(e) => setCarModel(e.target.value)}
+          placeholder="Model"
+        />
+        <button onClick={addCar}>Add Car</button>
+      </div>
     </div>
   );
 }
 ```
 
-**Key Patterns:**
-- Separate state for form inputs
-- Create new object for each item
-- Use index for temporary keys (better: unique ID)
-- Reset form after adding
-
 ---
 
-## Section 7: Todo List Project
+## 9. Project: Todo List Application
 
-### Learning Objectives
-- Build a complete application
-- Combine multiple state management techniques
-- Implement CRUD operations
-- Handle complex user interactions
+### 9.1 Features
+- Add/Delete tasks
+- Reorder tasks (up/down)
+- Keyboard support (Enter to add)
 
-### 7.1 ToDoList Component
+### 9.2 Implementation
 
-**Purpose:** Full-featured todo list application
-
-**Features:**
-1. Add new tasks
-2. Delete tasks
-3. Move tasks up/down
-4. Toggle completion (if implemented)
-
-**State Structure:**
 ```jsx
-const [tasks, setTasks] = useState([
-  "Task 1",
-  "Task 2",
-  "Task 3"
-]);
+import { useState } from 'react';
 
-const [newTask, setNewTask] = useState("");
-```
-
-**Implementation:**
-
-**1. Add Task:**
-```jsx
-const addTask = () => {
-  if (newTask.trim() !== "") {
-    setTasks(t => [...t, newTask]);
-    setNewTask("");
-  }
-};
-
-const handleKeyPress = (e) => {
-  if (e.key === 'Enter') {
-    addTask();
-  }
-};
-```
-
-**2. Delete Task:**
-```jsx
-const deleteTask = (index) => {
-  setTasks(tasks.filter((_, i) => i !== index));
-};
-```
-
-**3. Move Task Up:**
-```jsx
-const moveTaskUp = (index) => {
-  if (index > 0) {
-    const updatedTasks = [...tasks];
-    [updatedTasks[index], updatedTasks[index - 1]] = 
-    [updatedTasks[index - 1], updatedTasks[index]];
-    setTasks(updatedTasks);
-  }
-};
-```
-
-**4. Move Task Down:**
-```jsx
-const moveTaskDown = (index) => {
-  if (index < tasks.length - 1) {
-    const updatedTasks = [...tasks];
-    [updatedTasks[index], updatedTasks[index + 1]] = 
-    [updatedTasks[index + 1], updatedTasks[index]];
-    setTasks(updatedTasks);
-  }
-};
-```
-
-**Complete Component:**
-```jsx
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
 
+  // Handle input change
   const handleInputChange = (e) => {
     setNewTask(e.target.value);
   };
 
+  // Add task
   const addTask = () => {
     if (newTask.trim() !== "") {
-      setTasks(t => [...t, newTask]);
+      setTasks(prev => [...prev, newTask]);
       setNewTask("");
     }
   };
 
-  const deleteTask = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
-  };
-
-  const moveTaskUp = (index) => {
-    if (index > 0) {
-      const updatedTasks = [...tasks];
-      [updatedTasks[index], updatedTasks[index - 1]] = 
-      [updatedTasks[index - 1], updatedTasks[index]];
-      setTasks(updatedTasks);
+  // Handle Enter key
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      addTask();
     }
   };
 
+  // Delete task
+  const deleteTask = (index) => {
+    setTasks(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Move task up
+  const moveTaskUp = (index) => {
+    if (index > 0) {
+      setTasks(prev => {
+        const updated = [...prev];
+        [updated[index], updated[index - 1]] = 
+        [updated[index - 1], updated[index]];
+        return updated;
+      });
+    }
+  };
+
+  // Move task down
   const moveTaskDown = (index) => {
     if (index < tasks.length - 1) {
-      const updatedTasks = [...tasks];
-      [updatedTasks[index], updatedTasks[index + 1]] = 
-      [updatedTasks[index + 1], updatedTasks[index]];
-      setTasks(updatedTasks);
+      setTasks(prev => {
+        const updated = [...prev];
+        [updated[index], updated[index + 1]] = 
+        [updated[index + 1], updated[index]];
+        return updated;
+      });
     }
   };
 
@@ -1051,52 +862,88 @@ function ToDoList() {
     <div className="to-do-list">
       <h1>To-Do List</h1>
       
-      <div>
+      <div className="input-container">
         <input 
           type="text"
           placeholder="Enter a task..."
           value={newTask}
           onChange={handleInputChange}
-          onKeyPress={(e) => e.key === 'Enter' && addTask()}
+          onKeyPress={handleKeyPress}
         />
         <button onClick={addTask}>Add</button>
       </div>
 
-      <ol>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            <span className="text">{task}</span>
-            <button 
-              className="delete-button"
-              onClick={() => deleteTask(index)}
-            >
-              Delete
-            </button>
-            <button 
-              className="move-button"
-              onClick={() => moveTaskUp(index)}
-            >
-              ☝
-            </button>
-            <button 
-              className="move-button"
-              onClick={() => moveTaskDown(index)}
-            >
-              👇
-            </button>
-          </li>
-        ))}
-      </ol>
+      {tasks.length === 0 ? (
+        <p className="empty-message">No tasks yet. Add one above!</p>
+      ) : (
+        <ol>
+          {tasks.map((task, index) => (
+            <li key={index}>
+              <span className="text">{task}</span>
+              <div className="buttons">
+                <button 
+                  className="delete-button"
+                  onClick={() => deleteTask(index)}
+                >
+                  Delete
+                </button>
+                <button 
+                  className="move-button"
+                  onClick={() => moveTaskUp(index)}
+                  disabled={index === 0}
+                >
+                  ☝
+                </button>
+                <button 
+                  className="move-button"
+                  onClick={() => moveTaskDown(index)}
+                  disabled={index === tasks.length - 1}
+                >
+                  👇
+                </button>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
     </div>
   );
 }
+
+export default ToDoList;
 ```
 
-**CSS Styling Considerations:**
+### 9.3 CSS Styling
+
 ```css
 .to-do-list {
   max-width: 600px;
   margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.input-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.input-container button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .to-do-list ol {
@@ -1107,9 +954,10 @@ function ToDoList() {
 .to-do-list li {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
   padding: 10px;
   border: 1px solid #ddd;
+  border-radius: 4px;
   margin-bottom: 5px;
 }
 
@@ -1117,40 +965,75 @@ function ToDoList() {
   flex: 1;
 }
 
+.buttons {
+  display: flex;
+  gap: 5px;
+}
+
 .delete-button {
   background-color: #dc3545;
   color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .move-button {
   background-color: #007bff;
   color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.move-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
 }
 ```
 
-**Enhancements (Exercise):**
-1. Add task completion toggle
-2. Persist tasks to localStorage
-3. Add edit functionality
-4. Filter completed/active tasks
-5. Add due dates
-6. Search functionality
+### 9.4 Enhancement Ideas
+- Task completion toggle
+- Local storage persistence
+- Edit functionality
+- Filters (all/active/completed)
+- Search/filter by text
 
 ---
 
-## Section 8: useEffect & Side Effects
+## 10. Side Effects with useEffect
 
-### Learning Objectives
-- Understand the useEffect hook
-- Handle side effects properly
-- Implement cleanup functions
-- Work with dependencies
+### 10.1 What Are Side Effects?
 
-### 8.1 Counter Component (with useEffect)
+Operations that interact outside the component: API calls, DOM manipulation, timers, subscriptions.
 
-**Purpose:** Demonstrate basic useEffect usage
+### 10.2 The useEffect Hook
 
-**Implementation:**
+```jsx
+useEffect(() => {
+  // Effect code (runs after render)
+  return () => { /* Cleanup (optional) */ };
+}, [dependencies]);
+```
+
+| Dependency Array | When Effect Runs |
+|------------------|------------------|
+| `[]` (empty) | Once on mount only |
+| `[dep1, dep2]` | On mount + when any dependency changes |
+| Omitted | After every render (rarely needed) |
+
+### 10.3 Basic useEffect Examples
+
+#### Updating Document Title
+
 ```jsx
 import { useState, useEffect } from 'react';
 
@@ -1158,52 +1041,33 @@ function Counter() {
   const [count, setCount] = useState(0);
   const [color, setColor] = useState("green");
 
+  // Runs when count changes
   useEffect(() => {
     document.title = `Count: ${count}`;
-  }, [count]);  // Runs when count changes
+  }, [count]);
 
+  // Runs when count OR color changes
   useEffect(() => {
-    document.title = `Count: ${count} ${color}`;
-  }, [count, color]);  // Runs when either changes
-
-  const increment = () => setCount(c => c + 1);
-  const decrement = () => setCount(c => c - 1);
-  const changeColor = () => {
-    setColor(c => c === "green" ? "red" : "green");
-  };
+    console.log(`Count: ${count}, Color: ${color}`);
+  }, [count, color]);
 
   return (
     <div>
-      <p style={{ color: color }}>Count: {count}</p>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
-      <button onClick={changeColor}>Change Color</button>
+      <p style={{ color }}>Count: {count}</p>
+      <button onClick={() => setCount(c => c + 1)}>+</button>
+      <button onClick={() => setCount(c => c - 1)}>-</button>
+      <button onClick={() => setColor(c => c === "green" ? "red" : "green")}>
+        Toggle Color
+      </button>
     </div>
   );
 }
 ```
 
-**useEffect Syntax:**
-```jsx
-useEffect(() => {
-  // Side effect code
-  
-  return () => {
-    // Cleanup (optional)
-  };
-}, [dependencies]);
-```
+### 10.4 Digital Clock - Timers with Cleanup
 
-**Dependency Array:**
-- `[]` - Run once on mount
-- `[dep1, dep2]` - Run when dependencies change
-- No array - Run after every render
+Timers must be cleaned up to prevent memory leaks:
 
-### 8.2 DigitalClock Component
-
-**Purpose:** Real-time clock with intervals
-
-**Implementation:**
 ```jsx
 import { useState, useEffect } from 'react';
 
@@ -1211,14 +1075,14 @@ function DigitalClock() {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
+    // Set up interval
     const intervalId = setInterval(() => {
       setTime(new Date());
     }, 1000);
 
-    return () => {
-      clearInterval(intervalId);  // Cleanup
-    };
-  }, []);  // Run once on mount
+    // Cleanup function - runs on unmount
+    return () => clearInterval(intervalId);
+  }, []);  // Empty array = run once on mount
 
   const formatTime = () => {
     let hours = time.getHours();
@@ -1227,58 +1091,40 @@ function DigitalClock() {
     const meridiem = hours >= 12 ? "PM" : "AM";
 
     hours = hours % 12 || 12;
+    const pad = (n) => String(n).padStart(2, '0');
 
-    return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)} ${meridiem}`;
-  };
-
-  const padZero = (number) => {
-    return (number < 10 ? "0" : "") + number;
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)} ${meridiem}`;
   };
 
   return (
-    <div className="clock-container">
-      <div className="clock">
-        <span>{formatTime()}</span>
-      </div>
+    <div className="clock">
+      <span>{formatTime()}</span>
     </div>
   );
 }
 ```
 
-**Key Concepts:**
-- `setInterval` for periodic updates
-- Cleanup prevents memory leaks
-- Empty dependency array for mount-only effect
-- Date formatting functions
+#### Memory Leak Prevention
 
-**Common Pitfall:**
 ```jsx
-// ❌ Memory leak - no cleanup
+// ❌ Memory leak - interval runs forever
 useEffect(() => {
-  setInterval(() => {
-    setTime(new Date());
-  }, 1000);
+  setInterval(() => setTime(new Date()), 1000);
 }, []);
 
 // ✅ Proper cleanup
 useEffect(() => {
-  const id = setInterval(() => {
-    setTime(new Date());
-  }, 1000);
-  
+  const id = setInterval(() => setTime(new Date()), 1000);
   return () => clearInterval(id);
 }, []);
 ```
 
-### 8.3 WinDim Component
+### 10.5 Window Dimensions - Event Listeners
 
-**Purpose:** Track window dimensions
-
-**Implementation:**
 ```jsx
 import { useState, useEffect } from 'react';
 
-function WinDim() {
+function WindowDimensions() {
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -1288,219 +1134,102 @@ function WinDim() {
       setHeight(window.innerHeight);
     };
 
+    // Add listener
     window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    // Cleanup - remove listener
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
     <div>
-      <p>Window Width: {width}px</p>
-      <p>Window Height: {height}px</p>
+      <p>Width: {width}px</p>
+      <p>Height: {height}px</p>
     </div>
   );
 }
 ```
 
-**Key Concepts:**
-- Event listener setup
-- Cleanup removes listeners
-- Prevents memory leaks
-- Window API access
+### 10.6 Cleanup Patterns Reference
 
-**useEffect Cleanup Patterns:**
+| Resource | Setup | Cleanup |
+|----------|-------|---------|
+| Interval | `setInterval(fn, ms)` | `clearInterval(id)` |
+| Timeout | `setTimeout(fn, ms)` | `clearTimeout(id)` |
+| Event Listener | `addEventListener(type, fn)` | `removeEventListener(type, fn)` |
+| Subscription | `source.subscribe(fn)` | `subscription.unsubscribe()` |
+| Fetch | `fetch(url, { signal })` | `controller.abort()` |
 
-**1. Timers:**
+#### Fetch with Abort Controller
+
 ```jsx
 useEffect(() => {
-  const timer = setTimeout(() => {...}, 1000);
-  return () => clearTimeout(timer);
-}, []);
+  const controller = new AbortController();
+  
+  fetch(url, { signal: controller.signal })
+    .then(res => res.json())
+    .then(setData)
+    .catch(err => {
+      if (err.name !== 'AbortError') {
+        console.error(err);
+      }
+    });
+
+  return () => controller.abort();
+}, [url]);
 ```
-
-**2. Event Listeners:**
-```jsx
-useEffect(() => {
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, []);
-```
-
-**3. Subscriptions:**
-```jsx
-useEffect(() => {
-  const subscription = dataSource.subscribe();
-  return () => subscription.unsubscribe();
-}, []);
-```
-
-### 8.4 Context API Components
-
-**Purpose:** Avoid prop drilling with Context
-
-**ComponentA (Provider):**
-```jsx
-import { useState, createContext } from 'react';
-import ComponentB from './ComponentB';
-
-export const UserContext = createContext();
-
-function ComponentA() {
-  const [user, setUser] = useState("BroCode");
-
-  return (
-    <div className="box">
-      <h1>ComponentA</h1>
-      <h2>Hello {user}</h2>
-      <UserContext.Provider value={user}>
-        <ComponentB />
-      </UserContext.Provider>
-    </div>
-  );
-}
-```
-
-**ComponentB (Intermediate):**
-```jsx
-import ComponentC from './ComponentC';
-
-function ComponentB() {
-  return (
-    <div className="box">
-      <h1>ComponentB</h1>
-      <ComponentC />
-    </div>
-  );
-}
-```
-
-**ComponentC (Consumer):**
-```jsx
-import { useContext } from 'react';
-import { UserContext } from './ComponentA';
-
-function ComponentC() {
-  const user = useContext(UserContext);
-
-  return (
-    <div className="box">
-      <h1>ComponentC</h1>
-      <h2>Bye {user}</h2>
-    </div>
-  );
-}
-```
-
-**Context API Steps:**
-1. Create context: `createContext()`
-2. Provide value: `<Context.Provider value={...}>`
-3. Consume value: `useContext(Context)`
-
-**Benefits:**
-- Avoids prop drilling
-- Global state management
-- Cleaner component tree
-- Better code organization
-
-**When to Use Context:**
-- Theme data (dark/light mode)
-- User authentication
-- Language preferences
-- Shopping cart state
-- Any data needed by many components
 
 ---
 
-## Section 9: useRef Hook
+## 11. DOM References with useRef
 
-### Learning Objectives
-- Understand useRef purpose
-- Access DOM elements directly
-- Persist values without re-renders
-- Implement practical applications
+### 11.1 What is useRef?
 
-### 9.1 UseRef Component
+Creates a mutable reference that persists across renders but does **NOT** trigger re-renders.
 
-**Purpose:** DOM manipulation with useRef
+```jsx
+const ref = useRef(initialValue);
+// ref.current = initialValue
+```
 
-**Implementation:**
+### 11.2 useRef vs useState
+
+| Feature | useRef | useState |
+|---------|--------|----------|
+| Triggers re-render | ❌ No | ✅ Yes |
+| Persists across renders | ✅ Yes | ✅ Yes |
+
+### 11.3 Accessing DOM Elements
+
 ```jsx
 import { useRef } from 'react';
 
-function UseRef() {
-  const inputRef1 = useRef(null);
-  const inputRef2 = useRef(null);
-  const inputRef3 = useRef(null);
+function InputFocus() {
+  const inputRef = useRef(null);
 
-  const handleClick1 = () => {
-    inputRef1.current.focus();
-    inputRef1.current.style.backgroundColor = "yellow";
-  };
-
-  const handleClick2 = () => {
-    inputRef2.current.focus();
-    inputRef2.current.style.backgroundColor = "yellow";
-  };
-
-  const handleClick3 = () => {
-    inputRef3.current.focus();
-    inputRef3.current.style.backgroundColor = "yellow";
+  const focusInput = () => {
+    inputRef.current.focus();
   };
 
   return (
-    <div>
-      <button onClick={handleClick1}>Click me 1</button>
-      <input ref={inputRef1} />
-
-      <button onClick={handleClick2}>Click me 2</button>
-      <input ref={inputRef2} />
-
-      <button onClick={handleClick3}>Click me 3</button>
-      <input ref={inputRef3} />
-    </div>
+    <>
+      <input ref={inputRef} type="text" />
+      <button onClick={focusInput}>Focus Input</button>
+    </>
   );
 }
 ```
 
-**Key Concepts:**
-- `useRef` creates mutable reference
-- `.current` accesses the DOM element
-- Direct DOM manipulation
-- No re-renders on change
+### 11.4 Stopwatch Implementation
 
-**useRef vs useState:**
-
-```jsx
-// useState - Causes re-render
-const [count, setCount] = useState(0);
-setCount(1);  // Component re-renders
-
-// useRef - No re-render
-const countRef = useRef(0);
-countRef.current = 1;  // No re-render
-```
-
-**Common Use Cases:**
-1. Focus management
-2. Scroll position
-3. Canvas drawing
-4. Video/audio controls
-5. Previous state values
-6. Timer IDs
-
-### 9.2 StopWatch Component
-
-**Purpose:** Practical stopwatch implementation
-
-**Implementation:**
 ```jsx
 import { useState, useEffect, useRef } from 'react';
 
 function StopWatch() {
   const [isRunning, setIsRunning] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
+  
+  // useRef for values that shouldn't trigger re-renders
   const intervalIdRef = useRef(null);
   const startTimeRef = useRef(0);
 
@@ -1511,9 +1240,7 @@ function StopWatch() {
       }, 10);
     }
 
-    return () => {
-      clearInterval(intervalIdRef.current);
-    };
+    return () => clearInterval(intervalIdRef.current);
   }, [isRunning]);
 
   const start = () => {
@@ -1521,9 +1248,7 @@ function StopWatch() {
     startTimeRef.current = Date.now() - elapsedTime;
   };
 
-  const stop = () => {
-    setIsRunning(false);
-  };
+  const stop = () => setIsRunning(false);
 
   const reset = () => {
     setElapsedTime(0);
@@ -1531,17 +1256,13 @@ function StopWatch() {
   };
 
   const formatTime = () => {
-    let hours = Math.floor(elapsedTime / (1000 * 60 * 60));
-    let minutes = Math.floor(elapsedTime / (1000 * 60) % 60);
-    let seconds = Math.floor(elapsedTime / 1000 % 60);
-    let milliseconds = Math.floor((elapsedTime % 1000) / 10);
+    const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+    const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+    const seconds = Math.floor((elapsedTime / 1000) % 60);
+    const milliseconds = Math.floor((elapsedTime % 1000) / 10);
 
-    hours = String(hours).padStart(2, "0");
-    minutes = String(minutes).padStart(2, "0");
-    seconds = String(seconds).padStart(2, "0");
-    milliseconds = String(milliseconds).padStart(2, "0");
-
-    return `${hours}:${minutes}:${seconds}:${milliseconds}`;
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
   };
 
   return (
@@ -1557,225 +1278,171 @@ function StopWatch() {
 }
 ```
 
-**Why useRef Here:**
-- `intervalIdRef` - Stores interval ID without causing re-renders
-- `startTimeRef` - Tracks start time across renders
-- Prevents unnecessary re-renders
-- Maintains consistent timing
-
-**Key Patterns:**
-1. Use state for rendered values (`elapsedTime`)
-2. Use ref for non-rendered values (`intervalId`)
-3. Cleanup intervals in useEffect
-4. Calculate elapsed time properly
-
-**CSS for StopWatch:**
-```css
-.stopwatch {
-  text-align: center;
-  font-family: monospace;
-}
-
-.display {
-  font-size: 75px;
-  color: #00ff00;
-  background-color: #000;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.controls button {
-  font-size: 20px;
-  padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-}
-
-.start-button {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.stop-button {
-  background-color: #f44336;
-  color: white;
-}
-
-.reset-button {
-  background-color: #2196F3;
-  color: white;
-}
-```
+### 11.5 Common useRef Use Cases
+- Focus management
+- Timer IDs (setInterval/setTimeout)
+- DOM element manipulation
+- Storing previous values
 
 ---
-In React, **`useRef`** is a Hook that lets you create a **mutable reference** that persists across renders **without causing a re-render when it changes**.
 
-It serves two primary purposes:
+## 12. Global State with Context API
 
-* * *
+### 12.1 The Problem: Prop Drilling
 
-## 1. Referencing DOM elements (most common use)
-
-`useRef` allows you to directly access a DOM node created by React.
-
-### Example
+When data needs to pass through many component layers:
 
 ```jsx
-import { useRef } from "react";
-
-function InputFocus() {
-  const inputRef = useRef(null);
-
-  const focusInput = () => {
-    inputRef.current.focus();
-  };
-
-  return (
-    <>
-      <input ref={inputRef} />
-      <button onClick={focusInput}>Focus</button>
-    </>
-  );
-}
+// Without Context - Tedious prop drilling
+<App>                         // Has user state
+  <Header user={user}>        // Just passes down
+    <Nav user={user}>         // Just passes down
+      <UserMenu user={user}/> // Finally uses it
+    </Nav>
+  </Header>
+</App>
 ```
 
-### Key points
+### 12.2 The Solution: Context API
 
-* `inputRef.current` points to the **actual DOM element**
-    
-* Useful for:
-    
-    * Focusing inputs
-        
-    * Scrolling
-        
-    * Measuring element size/position
-        
-    * Integrating with non-React libraries
-        
+Context provides a way to share values without passing props through every level.
 
-* * *
+#### Three Steps
 
-## 2. Storing mutable values without re-rendering
+| Step | API | Purpose |
+|------|-----|---------|
+| 1. Create | `createContext()` | Create the context object |
+| 2. Provide | `<Context.Provider value={}>` | Make value available |
+| 3. Consume | `useContext(Context)` | Access value anywhere |
 
-`useRef` can store **any value**, not just DOM nodes. Unlike `useState`, changing `.current` **does not trigger a re-render**.
+### 12.3 Implementation Example
 
-### Example
+#### Step 1: Create Context & Provider (ComponentA.jsx)
 
 ```jsx
-import { useRef, useState } from "react";
+import { useState, createContext } from 'react';
+import ComponentB from './ComponentB';
 
-function RenderCounter() {
-  const renderCount = useRef(0);
-  const [count, setCount] = useState(0);
+// Create context
+export const UserContext = createContext();
 
-  renderCount.current++;
+function ComponentA() {
+  const [user, setUser] = useState("BroCode");
 
   return (
-    <div>
-      <p>State count: {count}</p>
-      <p>Render count: {renderCount.current}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
+    <div className="box">
+      <h1>ComponentA</h1>
+      <h2>Hello {user}</h2>
+      
+      {/* Provide value to all children */}
+      <UserContext.Provider value={user}>
+        <ComponentB />
+      </UserContext.Provider>
     </div>
   );
 }
+
+export default ComponentA;
 ```
 
-### Why this works
+#### Step 2: Intermediate Component (ComponentB.jsx)
 
-* `renderCount` persists across renders
-    
-* Updating it doesn’t cause an infinite render loop
-    
-* Perfect for:
-    
-    * Previous values
-        
-    * Timers / intervals
-        
-    * Flags (e.g., `isFirstRender`)
-        
-    * Caching values
-        
+```jsx
+import ComponentC from './ComponentC';
 
-* * *
+function ComponentB() {
+  // No need to receive or pass props!
+  return (
+    <div className="box">
+      <h1>ComponentB</h1>
+      <ComponentC />
+    </div>
+  );
+}
 
-## How `useRef` works internally (conceptually)
-
-```js
-const ref = useRef(initialValue);
-
-// ref = { current: initialValue }
+export default ComponentB;
 ```
 
-* The **same object** is returned on every render
-    
-* Only `.current` is mutable
-    
+#### Step 3: Consume Context (ComponentC.jsx)
 
-* * *
+```jsx
+import { useContext } from 'react';
+import { UserContext } from './ComponentA';
 
-## `useRef` vs `useState`
+function ComponentC() {
+  // Access value directly
+  const user = useContext(UserContext);
 
-| Feature | useRef | useState |
-| --- | --- | --- |
-| Triggers re-render | ❌ No | ✅ Yes |
-| Persists across renders | ✅ Yes | ✅ Yes |
-| Causes UI update | ❌ No | ✅ Yes |
-| Used for DOM access | ✅ Yes | ❌ No |
+  return (
+    <div className="box">
+      <h1>ComponentC</h1>
+      <h2>Bye {user}</h2>
+    </div>
+  );
+}
 
-* * *
+export default ComponentC;
+```
 
-## When **not** to use `useRef`
+### 12.4 Advanced Pattern: Context with Updater
 
-* When the value should affect what is rendered → use `useState`
-    
-* As a replacement for state (bad practice)
-    
+Pass both state and setter through context:
 
-* * *
+```jsx
+import { useState, createContext, useContext } from 'react';
 
-## Common real-world use cases
+// Create context
+const ThemeContext = createContext();
 
-* Accessing input values imperatively
-    
-* Storing timeout/interval IDs
-    
-* Tracking previous props/state
-    
-* Preventing effects from running on first render
-    
+// Custom hook for easier consumption
+export const useTheme = () => useContext(ThemeContext);
 
-* * *
+// Provider component
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+  
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
-### One-line summary
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
 
-> **`useRef` stores a persistent, mutable value that does not trigger re-renders and is commonly used for DOM access or instance-like variables.**
+// Usage in any child component
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  
+  return (
+    <button onClick={toggleTheme}>
+      Current: {theme} - Click to toggle
+    </button>
+  );
+}
+```
 
-If you want, I can also explain:
+### 12.5 When to Use Context
 
-* `useRef` vs `useEffect`
-    
-* How to get previous state using `useRef`
-    
-* Why `useRef` is preferred over `document.querySelector` in React
+✅ **Good for:** Theme, Authentication, Localization, Shopping cart
 
-## Best Practices & Patterns
+❌ **Avoid for:** Data needed by nearby components (use props), frequently changing data (use Redux/Zustand)
+- As a replacement for all prop passing
 
-### Component Design
+---
 
-**1. Single Responsibility:**
+## 13. Best Practices & Patterns
+
+### 13.1 Component Design
+
+#### Single Responsibility Principle
+
 ```jsx
 // ❌ Too many responsibilities
 function UserDashboard() {
-  // User data
-  // Authentication
-  // Analytics
-  // Notifications
-  // Settings
+  // User data + Authentication + Analytics + Notifications + Settings
 }
 
 // ✅ Separated concerns
@@ -1791,264 +1458,147 @@ function UserDashboard() {
 }
 ```
 
-**2. Props Destructuring:**
+#### Props Destructuring
+
 ```jsx
 // ❌ Verbose
 function Student(props) {
   return <div>{props.name} - {props.age}</div>;
 }
 
-// ✅ Cleaner
+// ✅ Clean
 function Student({ name, age }) {
   return <div>{name} - {age}</div>;
 }
-```
 
-**3. Default Props:**
-```jsx
+// ✅ With defaults
 function Button({ text = "Click me", onClick = () => {} }) {
   return <button onClick={onClick}>{text}</button>;
 }
 ```
 
-### State Management
+### 13.2 State Management
 
-**1. State Location:**
-- Keep state as local as possible
-- Lift state up when shared
-- Use Context for global state
+| Guideline | Description |
+|-----------|-------------|
+| Keep state local | Only lift when sharing is needed |
+| Use updater functions | When new state depends on previous |
+| Never mutate directly | Always create new objects/arrays |
+| Colocate state | Keep state close to where it's used |
 
-**2. State Updates:**
 ```jsx
-// ✅ Updater function when dependent on previous
+// ✅ Updater for dependent updates
 setCount(prev => prev + 1);
 
-// ✅ Direct value when independent
+// ✅ Direct value for independent updates
 setName("John");
+
+// ✅ Immutable object update
+setUser(prev => ({ ...prev, name: "John" }));
+
+// ✅ Immutable array update
+setItems(prev => [...prev, newItem]);
 ```
 
-**3. Immutability:**
+### 13.3 Performance Tips
+
 ```jsx
-// ❌ Mutation
-state.push(item);
-state.property = value;
-
-// ✅ Immutable
-setState([...state, item]);
-setState({ ...state, property: value });
-```
-
-### Performance
-
-**1. Avoid Inline Functions in JSX:**
-```jsx
-// ❌ Creates new function each render
+// ❌ Inline function creates new instance each render
 <button onClick={() => handleClick(id)}>Click</button>
 
-// ✅ Memoized handler
-const handleClick = useCallback(() => {
-  doSomething(id);
-}, [id]);
-<button onClick={handleClick}>Click</button>
-```
+// ✅ Define handler separately (or use useCallback)
+const handleItemClick = () => handleClick(id);
+<button onClick={handleItemClick}>Click</button>
 
-**2. Key Prop:**
-```jsx
-// ❌ Index as key (problematic)
-{items.map((item, index) => <div key={index}>{item}</div>)}
+// ❌ Index as key (problematic with reordering)
+{items.map((item, i) => <Item key={i} data={item} />)}
 
 // ✅ Unique identifier
-{items.map(item => <div key={item.id}>{item.name}</div>)}
+{items.map(item => <Item key={item.id} data={item} />)}
 ```
 
-**3. Conditional Rendering:**
+### 13.4 Conditional Rendering Patterns
+
 ```jsx
-// ✅ Early return
+// Early return for guard clauses
 if (!data) return <Loading />;
 return <DataDisplay data={data} />;
 
-// ✅ Ternary for simple cases
+// Ternary for either/or
 {isLoggedIn ? <Dashboard /> : <Login />}
 
-// ✅ Logical AND for optional rendering
+// Logical AND for optional
 {error && <ErrorMessage error={error} />}
 ```
 
-### Code Organization
+### 13.5 Code Organization
 
-**1. File Structure:**
 ```
 src/
 ├── components/
-│   ├── common/
-│   │   ├── Button/
-│   │   │   ├── Button.jsx
-│   │   │   └── Button.module.css
-│   ├── features/
-│   │   ├── TodoList/
-│   │   │   ├── TodoList.jsx
-│   │   │   ├── TodoItem.jsx
-│   │   │   └── TodoList.css
-├── hooks/
-│   └── useLocalStorage.js
-├── context/
-│   └── UserContext.jsx
-├── utils/
-│   └── formatters.js
+│   ├── common/           # Reusable UI
+│   └── features/         # Feature-specific
+├── hooks/                # Custom hooks
+├── context/              # Context providers
+├── utils/                # Utilities
 └── App.jsx
 ```
 
-**2. Custom Hooks:**
-```jsx
-function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
-  });
+### 13.6 Naming Conventions
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue];
-}
-```
-
-**3. Constants:**
-```jsx
-// constants.js
-export const COLORS = {
-  PRIMARY: '#007bff',
-  SECONDARY: '#6c757d',
-  SUCCESS: '#28a745',
-  DANGER: '#dc3545',
-};
-
-export const API_ENDPOINTS = {
-  USERS: '/api/users',
-  POSTS: '/api/posts',
-};
-```
-
-### Naming Conventions
-
-**1. Components:** PascalCase
-```jsx
-function UserProfile() { }
-function TodoList() { }
-```
-
-**2. Functions:** camelCase
-```jsx
-const handleClick = () => { };
-const fetchUserData = () => { };
-```
-
-**3. Constants:** UPPER_SNAKE_CASE
-```jsx
-const MAX_ITEMS = 100;
-const API_BASE_URL = 'https://api.example.com';
-```
-
-**4. Event Handlers:** handle prefix
-```jsx
-const handleSubmit = () => { };
-const handleChange = () => { };
-const handleDelete = () => { };
-```
+| Type | Convention | Example |
+|------|------------|---------|
+| Components | PascalCase | `UserProfile` |
+| Functions | camelCase | `handleClick` |
+| Event handlers | handle + Action | `handleSubmit` |
+| Custom hooks | use + Name | `useLocalStorage` |
 
 ---
 
-## Next Steps
+## 14. Common Pitfalls & Solutions
 
-### Intermediate Topics
-1. **React Router** - Navigation between pages
-2. **Form Validation** - Using libraries like Formik or React Hook Form
-3. **API Integration** - Fetch data from APIs
-4. **Error Boundaries** - Graceful error handling
-5. **Code Splitting** - Lazy loading components
+### 14.1 Infinite Loops
 
-### Advanced Topics
-1. **State Management Libraries** - Redux, Zustand, Recoil
-2. **Server State** - React Query, SWR
-3. **Testing** - Jest, React Testing Library
-4. **TypeScript** - Type safety in React
-5. **Performance Optimization** - memo, useMemo, useCallback
-6. **Custom Hooks** - Reusable logic extraction
-7. **Compound Components** - Advanced component patterns
-
-### Project Ideas
-1. **Weather App** - API integration, geolocation
-2. **E-commerce Cart** - State management, local storage
-3. **Blog Platform** - CRUD operations, routing
-4. **Chat Application** - Real-time updates, WebSockets
-5. **Dashboard** - Data visualization, charts
-6. **Recipe App** - Search, filters, favorites
-
-### Resources
-- **Official React Docs:** https://react.dev
-- **React Patterns:** https://reactpatterns.com
-- **Component Libraries:** Material-UI, Chakra UI, Ant Design
-- **State Management:** Redux Toolkit, Zustand
-- **Forms:** React Hook Form, Formik
-- **Routing:** React Router
-- **Testing:** Jest, React Testing Library
-
----
-
-## Common Pitfalls & Solutions
-
-### 1. Infinite Loops in useEffect
 ```jsx
-// ❌ Causes infinite loop
+// ❌ Infinite loop
 useEffect(() => {
   setCount(count + 1);
 }, [count]);
 
-// ✅ Fixed with proper dependencies
+// ✅ Use updater
 useEffect(() => {
-  // Run only on mount
+  const id = setInterval(() => setCount(c => c + 1), 1000);
+  return () => clearInterval(id);
 }, []);
 ```
 
-### 2. Stale Closures
-```jsx
-// ❌ Uses stale count value
-useEffect(() => {
-  const interval = setInterval(() => {
-    setCount(count + 1);  // Always uses initial count
-  }, 1000);
-  return () => clearInterval(interval);
-}, []);
+### 14.2 Stale Closures
 
-// ✅ Uses updater function
-useEffect(() => {
-  const interval = setInterval(() => {
-    setCount(c => c + 1);  // Uses latest count
-  }, 1000);
-  return () => clearInterval(interval);
-}, []);
+```jsx
+// ❌ Stale closure
+setInterval(() => setCount(count + 1), 1000);
+
+// ✅ Updater function
+setInterval(() => setCount(c => c + 1), 1000);
 ```
 
-### 3. Missing Dependencies
-```jsx
-// ❌ ESLint warning
-useEffect(() => {
-  fetchData(userId);
-}, []);  // userId should be in dependencies
+### 14.3 Missing Dependencies
 
-// ✅ Include all dependencies
-useEffect(() => {
-  fetchData(userId);
-}, [userId]);
+```jsx
+// ❌ Missing dependency
+useEffect(() => { fetchData(userId); }, []);
+
+// ✅ Include dependencies
+useEffect(() => { fetchData(userId); }, [userId]);
 ```
 
-### 4. Mutating State
+### 14.4 Mutating State
+
 ```jsx
-// ❌ Direct mutation
+// ❌ Direct mutation - React won't detect
 const addItem = () => {
-  items.push(newItem);  // Wrong!
-  setItems(items);
+  items.push(newItem);  // Mutates original
+  setItems(items);      // Same reference
 };
 
 // ✅ Create new array
@@ -2057,34 +1607,77 @@ const addItem = () => {
 };
 ```
 
-### 5. Key Prop Issues
+### 14.5 Forgetting Cleanup
+
+```jsx
+// ❌ Memory leak
+useEffect(() => {
+  window.addEventListener('resize', handleResize);
+}, []);
+
+// ✅ Proper cleanup
+useEffect(() => {
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+```
+
+### 14.6 Key Prop Issues
+
 ```jsx
 // ❌ Index as key with dynamic list
-{items.map((item, index) => 
-  <Item key={index} data={item} />
-)}
+{items.map((item, i) => <Item key={i} data={item} />)}
 
 // ✅ Stable unique identifier
-{items.map(item => 
-  <Item key={item.id} data={item} />
-)}
+{items.map(item => <Item key={item.id} data={item} />)}
 ```
 
 ---
 
-## Summary
+## 15. Next Steps & Resources
 
-This tutorial covered:
+### Learning Path
 
-1. ✅ **React Fundamentals** - Components, JSX, Props
-2. ✅ **Styling** - CSS, CSS Modules
-3. ✅ **State Management** - useState, complex state
-4. ✅ **Side Effects** - useEffect, cleanup
-5. ✅ **Refs** - useRef, DOM manipulation
-6. ✅ **Context** - Global state without prop drilling
-7. ✅ **Best Practices** - Code organization, patterns
-8. ✅ **Real Projects** - Todo List, Stopwatch, Clock
+| Level | Topics |
+|-------|--------|
+| **Intermediate** | React Router, Form Libraries, API Integration, Error Boundaries |
+| **Advanced** | Redux/Zustand, React Query, Testing, TypeScript, Performance |
 
-You now have a solid foundation in React. Practice by building projects and exploring advanced topics!
+### Practice Projects
+- Weather App (API, async state)
+- E-commerce Cart (complex state, localStorage)
+- Blog Platform (CRUD, routing)
 
-Happy Coding! 🚀
+### Resources
+- Official: https://react.dev
+- UI: Material-UI, Chakra UI
+- State: Redux Toolkit, Zustand
+- Forms: React Hook Form
+- Data: React Query, SWR
+
+---
+
+## Quick Reference
+
+```jsx
+// useState
+const [value, setValue] = useState(initial);
+setValue(prev => prev + 1);
+
+// useEffect
+useEffect(() => {
+  // effect
+  return () => { /* cleanup */ };
+}, [deps]);
+
+// useRef
+const ref = useRef(initial);
+ref.current = newValue;  // No re-render
+
+// useContext
+const value = useContext(MyContext);
+```
+
+---
+
+**Happy Coding! 🚀**
